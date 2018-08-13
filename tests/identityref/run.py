@@ -151,9 +151,7 @@ class IdentityRefTests(PyangBindTestCase):
 
         pybind_json = json.loads(
             json.dumps(
-                pybindIETFJSONEncoder.generate_element(self.instance, flt=True),
-                cls=pybindIETFJSONEncoder,
-                indent=4,
+                pybindIETFJSONEncoder.generate_element(self.instance, flt=True), cls=pybindIETFJSONEncoder, indent=4
             )
         )
 
@@ -164,8 +162,9 @@ class IdentityRefTests(PyangBindTestCase):
         # However, as 'remote-id' is defined in another module, it must be qualified
         self.assertEqual(pybind_json["identityref:target"]["local-leaf2"], "remote-two:remote-id")
         # Again, as 'remote-leaf' and 'local-id' belong to different namespaces
-        self.assertEqual(pybind_json["identityref:target"]["remote-two:augmentation"]["remote-leaf"],
-                         "identityref:local-id")
+        self.assertEqual(
+            pybind_json["identityref:target"]["remote-two:augmentation"]["remote-leaf"], "identityref:local-id"
+        )
 
 
 if __name__ == "__main__":
