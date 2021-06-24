@@ -1,4 +1,5 @@
 import distutils
+import distutils.spawn
 import importlib
 import inspect
 import os.path
