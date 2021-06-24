@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 import json
 import os.path
 import unittest
-from bitarray import bitarray
+from collections import OrderedDict
 from decimal import Decimal
 
 import pyangbind.lib.pybindJSON as pbJ
@@ -55,34 +55,39 @@ class JSONDeserialiseTests(PyangBindTestCase):
     def test_all_the_types(self):
         expected_json = {
             "c1": {
-                "l1": {
-                    "1": {
-                        "one-leaf": "hi",
-                        "typedef-one": "test",
-                        "boolean": True,
-                        "binary": bitarray("010101"),
-                        "union": "16",
-                        "identityref": "idone",
-                        "enumeration": "one",
-                        "k1": 1,
-                        "uint16": 1,
-                        "union-list": [16, "chicken"],
-                        "uint32": 1,
-                        "int32": 1,
-                        "int16": 1,
-                        "string": "bear",
-                        "decimal": Decimal("42.42"),
-                        "typedef-two": 8,
-                        "uint8": 1,
-                        "restricted-integer": 6,
-                        "leafref": "16",
-                        "int8": 1,
-                        "uint64": 1,
-                        "int64": 1,
-                        "restricted-string": "aardvark",
-                    }
-                },
-                "t1": {"32": {"target": "32"}, "16": {"target": "16"}},
+                "l1": OrderedDict(
+                    [
+                        (
+                            "1",
+                            {
+                                "one-leaf": "hi",
+                                "typedef-one": "test",
+                                "boolean": True,
+                                "binary": b"yang",
+                                "union": "16",
+                                "identityref": "idone",
+                                "enumeration": "one",
+                                "k1": 1,
+                                "uint16": 1,
+                                "union-list": [16, "chicken"],
+                                "uint32": 1,
+                                "int32": 1,
+                                "int16": 1,
+                                "string": "bear",
+                                "decimal": Decimal("42.42"),
+                                "typedef-two": 8,
+                                "uint8": 1,
+                                "restricted-integer": 6,
+                                "leafref": "16",
+                                "int8": 1,
+                                "uint64": 1,
+                                "int64": 1,
+                                "restricted-string": "aardvark",
+                            },
+                        )
+                    ]
+                ),
+                "t1": OrderedDict([("16", {"target": "16"}), ("32", {"target": "32"})]),
             }
         }
         actual_json = pbJ.load(
