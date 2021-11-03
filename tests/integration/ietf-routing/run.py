@@ -10,6 +10,7 @@ from pyangbind.lib.serialise import pybindIETFJSONEncoder, pybindJSONDecoder, py
 from pyangbind.lib.xpathhelper import YANGPathHelper
 from tests.base import PyangBindTestCase
 
+
 class IetfRoutingTests(PyangBindTestCase):
     yang_files = [
         "yang/ietf-routing@2018-03-13.yang",
@@ -135,6 +136,36 @@ class IetfRoutingTests(PyangBindTestCase):
 
             else:
                 self.fail(f"Route with unexpected destination: {v6_rib_rt.destination_prefix}")
+
+    @unittest.skip("Incorrect JSON serialisation")
+    def test_roundtrip_operational_state(self):
+        """
+        Deserialise / serialise the example operational state for ietf-routing.
+
+        This test currently fails:
+
+        ietf-ipv4-unicast-routing and ietf-ipv6-unicast-routing both add a
+        'destination-prefix', with a different type (and 'when' clause,
+        restriction), for each. When serialising, currently pyangbind cannot
+        decide which module to pick, so it generates JSON that looks like:
+
+            'ribs': {'rib': [{'address-family': 'ietf-ipv4-unicast-routing:ipv4-unicast',
+                      'default-rib': True,
+                      'name': 'ipv4-master',
+                      'routes': {'route': [{'ietf-ipv4-unicast-routing|ietf-ipv6-unicast-routing:destination-prefix': '192.0.2.1/24',
+        """
+        with open(os.path.join(os.path.dirname(__file__), "testdata", "operational.json"), "r") as fp:
+            external_json = json.load(fp)
+
+        instance = pybindJSONDecoder.load_ietf_json(external_json, self.bindings, "ietf-routing")
+
+        pybind_json = json.loads(
+            json.dumps(pybindIETFJSONEncoder.generate_element(instance, flt=True), cls=pybindIETFJSONEncoder, indent=4)
+        )
+
+        self.maxDiff = 20_000
+        self.assertEqual(external_json, pybind_json, "JSON did not match the expected output.")
+
 
 if __name__ == "__main__":
     unittest.main()

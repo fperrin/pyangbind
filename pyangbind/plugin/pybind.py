@@ -853,7 +853,36 @@ def get_children(ctx, fd, i_children, module, parent, path=str(), parent_cfg=Tru
         choices = {}
         choice_attrs = []
         classes = {}
-        for i in elements:
+
+        merged_elements = {}
+        # there might be several elements with the same name but different namespaces
+        for elem in elements:
+            if elem["name"] not in merged_elements:
+                merged_elements[elem["name"]] = elem
+            else:
+                previous_elem = merged_elements[elem["name"]]
+
+                # check that the elements are compatible enough to be merged
+                assert elem["yang_name"] == previous_elem["yang_name"]
+                assert elem["class"] == previous_elem["class"]
+
+                # the 'type', used to seed the "base" argument to YANGDynClass,
+                # which is used to validate and map YANG values (encoded as JSON
+                # scalars) into Python objects; including, for strings, a RE
+                # restriction pattern
+                if not isinstance(previous_elem["type"], list):
+                    previous_elem["type"] = [previous_elem["type"]]
+                if not isinstance(elem["type"], list):
+                    elem["type"] = [elem["type"]]
+                previous_elem["type"] += elem["type"]
+
+                # YANGDynClass expects a single defining_module / namespace, which
+                # might not be the case. This causes a known issue --see testcase
+                # integration.ietf-routing.run.IetfRoutingTests.roundtrip_operational_state
+                previous_elem["defining_module"] = f"{previous_elem['defining_module']}|{elem['defining_module']}"
+                previous_elem["namespace"] = f"{previous_elem['namespace']}|{elem['namespace']}"
+
+        for i in merged_elements.values():
             # Loop through the elements and build a string that corresponds to the
             # class that is going to be created. In all cases (thus far) this uses
             # the YANGDynClass helper function to generate a dynamic type. This

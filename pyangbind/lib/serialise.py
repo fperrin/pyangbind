@@ -234,7 +234,7 @@ class IETFYangDataSerialiser(YangDataSerialiser):
     def yangt_identityref(self, obj):
         try:
             emod = obj._enumeration_dict[obj]["@module"]
-            if emod != obj._defining_module:
+            if emod != obj._defining_module and ":" not in obj:
                 return "%s:%s" % (obj._enumeration_dict[obj]["@module"], obj)
         except KeyError:
             pass
