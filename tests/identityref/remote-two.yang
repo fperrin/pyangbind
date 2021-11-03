@@ -17,4 +17,14 @@ module remote-two {
     identity remote-id {
       base "i:local-base";
     }
+
+    augment "/i:target" {
+      container augmentation {
+	leaf remote-leaf {
+	  type identityref {
+	    base i:local-base;
+	  }
+	}
+      }
+    }
 }
