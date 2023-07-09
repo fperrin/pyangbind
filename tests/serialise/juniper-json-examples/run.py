@@ -24,7 +24,7 @@ class JuniperJSONTests(PyangBindTestCase):
         },
         {
             "local_path": "include",
-            "remote_prefix": "https://raw.githubusercontent.com/openconfig/public/master/release/models/",
+            "remote_prefix": "https://raw.githubusercontent.com/openconfig/public/8527e6426cf136930ff24f60939994949cefc073/release/models/",
             "files": [
                 "policy/openconfig-policy-types.yang",
                 "openconfig-extensions.yang",
@@ -36,7 +36,7 @@ class JuniperJSONTests(PyangBindTestCase):
         },
         {
             "local_path": "openconfig",
-            "remote_prefix": "https://raw.githubusercontent.com/openconfig/public/master/release/models/",
+            "remote_prefix": "https://raw.githubusercontent.com/openconfig/public/8527e6426cf136930ff24f60939994949cefc073/release/models/",
             "files": [
                 "bgp/openconfig-bgp-common-multiprotocol.yang",
                 "bgp/openconfig-bgp-common-structure.yang",
