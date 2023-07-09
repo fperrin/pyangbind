@@ -23,18 +23,18 @@ class OpenconfigBGPTests(PyangBindTestCase):
         },
         {
             "local_path": "include",
-            "remote_prefix": "https://raw.githubusercontent.com/openconfig/public/master/release/models/",
+            "remote_prefix": "https://raw.githubusercontent.com/openconfig/public/e020ce4b7e94482a9bbcf8dfb73f3d01dbdda5e6/release/models/",
             "files": [
                 "policy/openconfig-policy-types.yang",
                 "openconfig-extensions.yang",
-                "types/openconfig-types.yang",
+                "openconfig-types.yang",
                 "types/openconfig-inet-types.yang",
                 "types/openconfig-yang-types.yang",
             ],
         },
         {
             "local_path": "openconfig",
-            "remote_prefix": "https://raw.githubusercontent.com/openconfig/public/master/release/models/",
+            "remote_prefix": "https://raw.githubusercontent.com/openconfig/public/e020ce4b7e94482a9bbcf8dfb73f3d01dbdda5e6/release/models/",
             "files": [
                 "policy/openconfig-routing-policy.yang",
                 "bgp/openconfig-bgp-common-multiprotocol.yang",
