@@ -25,7 +25,7 @@ class OpenconfigSerialiseTests(PyangBindTestCase):
     remote_yang_files = [
         {
             "local_path": "include",
-            "remote_prefix": "https://raw.githubusercontent.com/openconfig/public/master/release/models/",
+            "remote_prefix": "https://raw.githubusercontent.com/openconfig/public/aace3d9085dd147661e5b197bb736f0815903e07/release/models/",
             "files": [
                 "openconfig-extensions.yang",
                 "types/openconfig-types.yang",
@@ -40,7 +40,7 @@ class OpenconfigSerialiseTests(PyangBindTestCase):
         },
         {
             "local_path": "openconfig",
-            "remote_prefix": "https://raw.githubusercontent.com/openconfig/public/master/release/models/",
+            "remote_prefix": "https://raw.githubusercontent.com/openconfig/public/aace3d9085dd147661e5b197bb736f0815903e07/release/models/",
             "files": ["interfaces/openconfig-interfaces.yang"],
         },
     ]
