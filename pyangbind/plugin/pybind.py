@@ -184,6 +184,9 @@ INT_RANGE_TYPES = ["uint8", "uint16", "uint32", "uint64", "int8", "int16", "int3
 # The types that are built-in to YANG
 YANG_BUILTIN_TYPES = list(class_map.keys()) + ["container", "list", "rpc", "notification", "leafref"]
 
+# Statements that are ignored by pyangbind
+YANG_IGNORED_STATEMENTS = ["action"]
+
 
 # Base machinery to support operation as a plugin to pyang.
 def pyang_plugin_init():
@@ -722,6 +725,8 @@ def get_children(ctx, fd, i_children, module, parent, path=str(), parent_cfg=Tru
         import_req = []
 
     for ch in i_children:
+        if ch.keyword in YANG_IGNORED_STATEMENTS:
+            continue
         children_tmp = getattr(ch, "i_children", None)
         if children_tmp is not None:
             children_tmp = [i.arg for i in children_tmp]
