@@ -1,0 +1,36 @@
+{
+  "ietf-routing:routing": {
+    "router-id": "192.0.2.1",
+    "control-plane-protocols": {
+      "control-plane-protocol": [
+        {
+        "type": "ietf-routing:static",
+        "name": "st0",
+        "description": "Static routing is used for the internal network.",
+        "static-routes": {
+          "ietf-ipv4-unicast-routing:ipv4": {
+            "route": [
+              {
+              "destination-prefix": "0.0.0.0/0",
+              "next-hop": {
+                "next-hop-address": "192.0.2.2"
+              }
+            }
+            ]
+          },
+          "ietf-ipv6-unicast-routing:ipv6": {
+            "route": [
+              {
+              "destination-prefix": "::/0",
+              "next-hop": {
+                "next-hop-address": "2001:db8:0:1::2"
+              }
+            }
+            ]
+          }
+        }
+      }
+      ]
+    }
+  }
+}
