@@ -63,6 +63,10 @@ module identityref {
 
     identity local-base;
 
+    identity local-id {
+      base local-base;
+    }
+
     container test-container {
         leaf id1 {
             type identityref {
@@ -145,6 +149,19 @@ module identityref {
             type identityref {
                 base local-base;
             }
+        }
+    }
+
+    container target {
+        leaf local-leaf1 {
+            type identityref {
+                base local-base;
+           }
+        }
+        leaf local-leaf2 {
+            type identityref {
+                base local-base;
+           }
         }
     }
 }

@@ -76,5 +76,7 @@ PyangBind does not currently try and be feature complete against the YANG langua
  **leaf-list**       | -                   | TypedList               | tests/leaf-list
  **union**           | -                   | Supported               | tests/union
  **choice**          | -                   | Supported               | tests/choice
- **rpc**             | -                   | Supported                  | tests/rpc
- **extension**             | -                   | Supported                  | *TODO*
+ **rpc**             | -                   | Supported               | tests/rpc
+ **extension**       | -                   | Supported               | *TODO*
+ **notification**    | -                   | Supported               | tests/notification
+ **action**          | -                   | Ignored                 | N/A

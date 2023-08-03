@@ -1,0 +1,113 @@
+{
+  "ietf-routing:routing": {
+    "router-id": "192.0.2.1",
+    "control-plane-protocols": {
+      "control-plane-protocol": [
+        {
+        "type": "ietf-routing:static",
+        "name": "st0",
+        "description": "Static routing is used for the internal network.",
+        "static-routes": {
+          "ietf-ipv4-unicast-routing:ipv4": {
+            "route": [
+              {
+              "destination-prefix": "0.0.0.0/0",
+              "next-hop": {
+                "next-hop-address": "192.0.2.2"
+              }
+            }
+            ]
+          },
+          "ietf-ipv6-unicast-routing:ipv6": {
+            "route": [
+              {
+              "destination-prefix": "::/0",
+              "next-hop": {
+                "next-hop-address": "2001:db8:0:1::2"
+              }
+            }
+            ]
+          }
+        }
+      }
+      ]
+    },
+    "ribs": {
+      "rib": [
+        {
+        "name": "ipv4-master",
+        "address-family": "ietf-ipv4-unicast-routing:ipv4-unicast",
+        "default-rib": true,
+        "routes": {
+          "route": [
+            {
+            "ietf-ipv4-unicast-routing:destination-prefix": "192.0.2.1/24",
+            "next-hop": {
+              "outgoing-interface": "eth0"
+            },
+            "route-preference": 0,
+            "source-protocol": "ietf-routing:direct",
+            "last-updated": "2015-10-24T17:11:27+02:00"
+          },
+            {
+            "ietf-ipv4-unicast-routing:destination-prefix": "198.51.100.0/24",
+            "next-hop": {
+              "outgoing-interface": "eth1"
+            },
+            "source-protocol": "ietf-routing:direct",
+            "route-preference": 0,
+            "last-updated": "2015-10-24T17:11:27+02:00"
+          },
+            {
+            "ietf-ipv4-unicast-routing:destination-prefix": "0.0.0.0/0",
+            "source-protocol": "ietf-routing:static",
+            "route-preference": 5,
+            "next-hop": {
+              "ietf-ipv4-unicast-routing:next-hop-address": "192.0.2.2"
+            },
+            "last-updated": "2015-10-24T18:02:45+02:00"
+          }
+          ]
+        }
+      },
+        {
+        "name": "ipv6-master",
+        "address-family":
+        "ietf-ipv6-unicast-routing:ipv6-unicast",
+        "default-rib": true,
+        "routes": {
+          "route": [
+            {
+            "ietf-ipv6-unicast-routing:destination-prefix": "2001:db8:0:1::/64",
+            "next-hop": {
+              "outgoing-interface": "eth0"
+            },
+            "source-protocol": "ietf-routing:direct",
+            "route-preference": 0,
+            "last-updated": "2015-10-24T17:11:27+02:00"
+          },
+            {
+            "ietf-ipv6-unicast-routing:destination-prefix": "2001:db8:0:2::/64",
+            "next-hop": {
+              "outgoing-interface": "eth1"
+            },
+            "source-protocol": "ietf-routing:direct",
+            "route-preference": 0,
+            "last-updated": "2015-10-24T17:11:27+02:00"
+          },
+            {
+            "ietf-ipv6-unicast-routing:destination-prefix": "::/0",
+            "next-hop": {
+              "ietf-ipv6-unicast-routing:next-hop-address": "2001:db8:0:1::2"
+            },
+            "source-protocol": "ietf-routing:static",
+            "route-preference": 5,
+            "last-updated": "2015-10-24T18:02:45+02:00"
+          }
+          ]
+        }
+      }
+      ]
+    }
+  }
+}

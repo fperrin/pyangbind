@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
+import json
 import unittest
 
+from pyangbind.lib.serialise import pybindIETFJSONEncoder
 from tests.base import PyangBindTestCase
 
 
@@ -141,6 +143,28 @@ class IdentityRefTests(PyangBindTestCase):
                 except ValueError:
                     allowed = False
                 self.assertEqual(allowed, valid)
+
+    def test_serialise_identityref(self):
+        self.instance.target.local_leaf1 = "identityref:local-id"
+        self.instance.target.local_leaf2 = "remote-two:remote-id"
+        self.instance.target.augmentation.remote_leaf = "identityref:local-id"
+
+        pybind_json = json.loads(
+            json.dumps(
+                pybindIETFJSONEncoder.generate_element(self.instance, flt=True), cls=pybindIETFJSONEncoder, indent=4
+            )
+        )
+
+        # It would be legal to drop the prefix here, as 'local-leaf1' and
+        # 'local-id' are defined in the same module. Currently pyangbind does
+        # include the prefix.
+        self.assertIn(pybind_json["identityref:target"]["local-leaf1"], ("local-id", "identityref:local-id"))
+        # However, as 'remote-id' is defined in another module, it must be qualified
+        self.assertEqual(pybind_json["identityref:target"]["local-leaf2"], "remote-two:remote-id")
+        # Again, as 'remote-leaf' and 'local-id' belong to different namespaces
+        self.assertEqual(
+            pybind_json["identityref:target"]["remote-two:augmentation"]["remote-leaf"], "identityref:local-id"
+        )
 
 
 if __name__ == "__main__":
